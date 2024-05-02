@@ -18,7 +18,7 @@ const Hero = () => {
               type: "ease-in",
             }}
             >
-              DEVOPS <br />
+              Raj <br />
               Most Suitable
               <br /> Property
             </motion.h1>
