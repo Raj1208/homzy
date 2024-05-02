@@ -28,7 +28,7 @@ jobs:
       
         
     - name: Build container
-      run: docker build -t raj456/homzy:v1 .
+      run: docker build -t raj456/homzy:v2 .
    
           
     - name: Login to Docker Hub
@@ -39,7 +39,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Push container to Docker Hub
-      run: docker push raj456/homzy:v1
+      run: docker push raj456/homzy:v2
 
     # - id: 'auth'
     #   uses: 'google-github-actions/auth@v1'
