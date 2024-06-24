@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homzy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homzy
+  template:
+    metadata:
+      labels:
+        app: homzy
+    spec:
+      containers:
+        - name: homzy-container
+          image: raj456/homzy
+          imagePullPolicy: Always
+        
