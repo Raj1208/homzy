@@ -79,10 +79,10 @@ jobs:
           git config user.email rajchauhan1208@gmail.com
           git config user.name Raj1208
           pwd
-          cat deployment.yaml
+          cat menifests/deployment.yaml
           pwd
-          sed -i "raj456/homzy.*+raj456/homzy:${{ github.run_number }}" deployment.yaml
-          cat deployment.yaml
+          sed -i "raj456/homzy.*+raj456/homzy:${{ github.run_number }}" menifests/deployment.yaml
+          cat menifests/deployment.yaml
           git add .
           git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
           git push origin main
