@@ -28,7 +28,7 @@ jobs:
       
         
     - name: Build container
-      run: docker build -t raj456/homzy:latest .
+      run: docker build -t raj456/homzy:${{ github.run_number }} .
    
           
     - name: Login to Docker Hub
