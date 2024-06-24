@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: dephomzy
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: homzy
@@ -16,4 +16,11 @@ spec:
         - name: homzy-container
           image: raj456/homzy:55
           imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "100m"  
+              memory: "128Mi"  
+            limits:
+              cpu: "500m"  
+              memory: "256Mi"  
         
