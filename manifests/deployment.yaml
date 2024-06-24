@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: homzy-container
-          image: raj456/homzy:52
+          image: raj456/homzy:53
           imagePullPolicy: Always
         
