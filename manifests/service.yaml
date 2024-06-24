@@ -8,6 +8,7 @@ spec:
   - port: 8081
     protocol: TCP
     targetPort: 80
+    nodePort: 32222
   selector:
     app: homzy
   type: NodePort
