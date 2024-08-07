@@ -34,7 +34,8 @@ jobs:
       run: |
         echo "Checking build directory contents..."
         ls 
-        ls -R ./dist/
+        echo "new commant"
+        ls -R ./dist
 
     - id: 'auth'
       uses: 'google-github-actions/auth@v1'
