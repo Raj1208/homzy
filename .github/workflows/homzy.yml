@@ -1,57 +1,40 @@
 name: CI for Homzy
-     
+
 on:
- workflow_dispatch:
+  workflow_dispatch:
     inputs:
       run_workflow:
-         description: 'Select an option'
-         required: true
-         type: choice
-         options:
-           - "true"
-           - "false"
-  # push:
-  #  branches:
-  #    - main
- #dsfkjsdk
+        description: 'Select an option'
+        required: true
+        type: choice
+        options:
+          - "true"
+          - "false"
 
-           
 jobs:
   build:
     runs-on: ubuntu-latest
-   
+
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Set up Node.js (or your build environment)
+    - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16'  # Specify your Node.js version or adjust for your build environment
+        node-version: '16'
 
     - name: Install dependencies
-      run: npm install  # Adjust according to your build system
+      run: npm install
 
     - name: Build project
-      run: npm run build 
-      
+      run: npm run build
 
-    # - name: Build container
-    #   run: docker build -t raj456/homzy:${{ github.run_number }} .
-   
-          
-    # - name: Login to Docker Hub
-    #   if: success()
-    #   uses: docker/login-action@v3
-    #   with:
-    #     username: ${{ secrets.DOCKER_USERNAME }}
-    #     password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Verify build directory
+      run: |
+        echo "Checking build directory contents..."
+        ls -R ./build || echo "Build directory not found or empty."
 
-    # - name: Push container to Docker Hub
-    #   run: docker push raj456/homzy:${{ github.run_number }}
-    - name: List build directory contents
-      run: ls -R ./build
-      
     - id: 'auth'
       uses: 'google-github-actions/auth@v1'
       with:
@@ -63,12 +46,13 @@ jobs:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         export_default_credentials: true
-        
+
     - id: 'upload-file'
       uses: 'google-github-actions/upload-cloud-storage@v2'
       with:
         path: './build/*'
-        destination: '${secrets.BUCKET}/'
+        destination: 'gs://${{ secrets.BUCKET }}/'
+
     # - name: Publish message to Pub/Sub
     #   run: |
     #     gcloud pubsub topics publish  ${{ secrets.TOPIC_NAME}} --message='{ "name":"cicd"}'
