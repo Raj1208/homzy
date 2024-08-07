@@ -49,10 +49,10 @@ jobs:
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         export_default_credentials: true
 
-    - id: 'upload-file'
+    - id: 'upload-folder'
       uses: 'google-github-actions/upload-cloud-storage@v2'
       with:
-        path: './dist/*'
+        path: './dist/index.html'
         destination: '${{ secrets.BUCKET }}/'
 
     # - name: Publish message to Pub/Sub
