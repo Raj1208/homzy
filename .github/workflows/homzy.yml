@@ -24,9 +24,18 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-  
+    - name: Set up Node.js (or your build environment)
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Specify your Node.js version or adjust for your build environment
+
+    - name: Install dependencies
+      run: npm install  # Adjust according to your build system
+
+    - name: Build project
+      run: npm run build 
       
-        
+
     # - name: Build container
     #   run: docker build -t raj456/homzy:${{ github.run_number }} .
    
@@ -52,7 +61,20 @@ jobs:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         export_default_credentials: true
+        
+    - name: Upload to GCS
+      env:
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+      run: |
+        # Authenticate with GCP
+        echo "${{ secrets.GCP_CREDENTIALS }}" > $HOME/gcp-key.json
+        gcloud auth activate-service-account --key-file=$HOME/gcp-key.json
+        
+        # Set default project
+        gcloud config set project ${secrets.Project-id}
 
+        # Upload build artifacts to GCS
+        gsutil cp -r ./build/* gs://{secrets.bucket}/
     # - name: Publish message to Pub/Sub
     #   run: |
     #     gcloud pubsub topics publish  ${{ secrets.TOPIC_NAME}} --message='{ "name":"cicd"}'
