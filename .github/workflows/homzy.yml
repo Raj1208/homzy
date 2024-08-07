@@ -52,8 +52,8 @@ jobs:
     - id: 'upload-file'
       uses: 'google-github-actions/upload-cloud-storage@v2'
       with:
-        path: './dist'
-        destination: 'gs://${{ secrets.BUCKET }}/'
+        path: './dist/*'
+        destination: 'gs://rajchauhan-bucket1208/
 
     # - name: Publish message to Pub/Sub
     #   run: |
