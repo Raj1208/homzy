@@ -66,12 +66,7 @@ jobs:
       env:
         GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
       run: |
-        # Authenticate with GCP
-        echo "${{ secrets.GCP_CREDENTIALS }}" > $HOME/gcp-key.json
-        gcloud auth activate-service-account --key-file=$HOME/gcp-key.json
-        
-        # Set default project
-        gcloud config set project ${secrets.GCP_PROJECT_ID}
+
 
         # Upload build artifacts to GCS
         gsutil cp -r ./build/* gs://{secrets.BUCKET}/
