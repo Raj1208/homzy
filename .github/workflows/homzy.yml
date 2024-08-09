@@ -48,12 +48,20 @@ jobs:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         export_default_credentials: true
+        
+    - name: Build Docker image
+      run: |
+        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/homzy:latest .
 
-    - id: 'upload-folder'
-      uses: 'google-github-actions/upload-cloud-storage@v2'
-      with:
-        path: './dist/'
-        destination: '${{ secrets.BUCKET }}/'
+    - name: Push Docker image to GCR
+      run: |
+        gcloud auth configure-docker
+        docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/homzy:latest
+    # - id: 'upload-folder'
+    #   uses: 'google-github-actions/upload-cloud-storage@v2'
+    #   with:
+    #     path: './dist/'
+    #     destination: '${{ secrets.BUCKET }}/'
 
     # - name: Publish message to Pub/Sub
     #   run: |
